@@ -61,4 +61,13 @@ dependencies {
     compile("cglib:cglib:2.2.2")
     compile("c3p0:c3p0:0.9.1.2")
     compile("asm:asm:3.3.1")
+
+    //shiro
+    compile("org.apache.shiro:shiro-core:1.2.5")
+    compile("org.apache.shiro:shiro-web:1.2.5")
+    compile("org.apache.shiro:shiro-aspectj:1.2.5")
+    compile("org.apache.shiro:shiro-cas:1.2.5")
+    compile("org.apache.shiro:shiro-spring:1.2.5")
+    compile("org.apache.shiro:shiro-spring:1.2.5")
+
 }
