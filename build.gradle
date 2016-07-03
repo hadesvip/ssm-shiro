@@ -1,10 +1,22 @@
 group 'com'
 version '1.0-SNAPSHOT'
 
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.bmuschko:gradle-tomcat-plugin:2.2.5"
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'maven'
+apply plugin: "com.bmuschko.tomcat"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -12,8 +24,12 @@ targetCompatibility = 1.8
 [compileJava, javadoc, compileTestJava]*.options*.encoding = 'UTF-8'
 webAppDirName = 'src/main/webapp'
 
+
 repositories {
+
     mavenLocal()
+    jcenter()
+    maven { url 'http://repo.spring.io/release' }
     maven { url 'http://maven.oschina.net/content/groups/public/' }
     mavenCentral()
 }
@@ -30,9 +46,11 @@ sourceSets {
 }
 
 def springVersion = '4.3.0.RELEASE';
+def tomcatVersion = '7.0.59';
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile('org.springframework:spring-test:3.2.14.RELEASE')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile("org.springframework:spring-test:${springVersion}")
 
 
     compile("org.springframework:spring-context:${springVersion}")
@@ -53,21 +71,47 @@ dependencies {
     compile("mysql:mysql-connector-java:5.1.18")
 
     //log
-    compile("org.slf4j:jcl-over-slf4j:1.5.8")
+//    compile("org.slf4j:jcl-over-slf4j:1.5.8")
     compile("ch.qos.logback:logback-classic:1.0.13")
 
     compile("org.javassist:javassist:3.20.0-GA")
     compile("aspectj:aspectjweaver:1.5.4")
     compile("cglib:cglib:2.2.2")
-    compile("c3p0:c3p0:0.9.1.2")
+    compile("com.alibaba:druid:1.0.20")
     compile("asm:asm:3.3.1")
 
     //shiro
     compile("org.apache.shiro:shiro-core:1.2.5")
     compile("org.apache.shiro:shiro-web:1.2.5")
     compile("org.apache.shiro:shiro-aspectj:1.2.5")
+    compile("org.apache.shiro:shiro-ehcache:1.2.5")
+
+    //单点登录
     compile("org.apache.shiro:shiro-cas:1.2.5")
     compile("org.apache.shiro:shiro-spring:1.2.5")
-    compile("org.apache.shiro:shiro-spring:1.2.5")
 
+    //yml
+    compile("org.yaml:snakeyaml:1.17")
+
+    //servlet
+    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
+    //compile("javax.servlet:jsp-api:2.0")
+
+    //fastjson
+    compile("com.alibaba:fastjson:1.2.12")
+
+    compile("com.fasterxml.jackson.core:jackson-databind:2.7.5")
+
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+
+
+}
+
+tomcat {
+    httpPort = 8080
+    httpsPort = 8091
+    enableSSL = true
+    contextPath = '/'
 }

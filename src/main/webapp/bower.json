@@ -1,0 +1,25 @@
+{
+  "name": "ssm-shiro",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "^1.4.0",
+    "bootstrap": "^3.2.0",
+    "angular-animate": "^1.4.0",
+    "smalot-bootstrap-datetimepicker": "bootstrap-datetimepicker-master#^2.3.11",
+    "bootstrap-datetimepicker": "^0.0.11"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
+  },
+  "appPath": "app",
+  "moduleName": "ssm-shiroApp",
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
+}

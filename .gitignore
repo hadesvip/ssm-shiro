@@ -4,3 +4,6 @@ settings.gradle
 ssm-shiro.iml
 build/
 .gradle/
+src/main/webapp/node_modules/
+src/main/webapp/bower_components/
+log/*
