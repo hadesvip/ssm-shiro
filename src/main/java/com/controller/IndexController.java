@@ -1,24 +1,20 @@
 package com.controller;
 
-import com.bean.User;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by wangyong on 2016/7/3.
  */
-@RestController
+@Controller
 public class IndexController {
 
 
     @RequestMapping("/")
-    public User welcome(User user) {
+    public String welcome() {
 
-        System.out.println(user);
-    /*    User user = new User();
-        user.setUserName("admin");
-        user.setPassword("admin");*/
+        System.out.println("index...");
 
-        return user;
+        return "index";
     }
 }

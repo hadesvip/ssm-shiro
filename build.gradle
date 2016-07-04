@@ -100,7 +100,10 @@ dependencies {
     //fastjson
     compile("com.alibaba:fastjson:1.2.12")
 
-    compile("com.fasterxml.jackson.core:jackson-databind:2.7.5")
+    //compile("com.fasterxml.jackson.core:jackson-databind:2.7.5")
+
+    //spring thymeleaf模板
+    compile("org.thymeleaf:thymeleaf:3.0.0.RELEASE")
 
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
