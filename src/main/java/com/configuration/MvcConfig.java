@@ -33,8 +33,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(MvcConfig.class);
 
-
-    //视图解析器
+    /**
+     * 视图解析器
+     */
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -51,13 +52,15 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/bower_components/**")
+                .addResourceLocations("/bower_components/")
+                .setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("/static/")
                 .setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
     }
 
     private FastJsonHttpMessageConverter4 fastJsonHttpMessageConverter4() {
-
         FastJsonHttpMessageConverter4 fastJsonHttpMessageConverter4 = new FastJsonHttpMessageConverter4();
         fastJsonHttpMessageConverter4.setSupportedMediaTypes(Arrays.asList(MediaType.TEXT_HTML, MediaType.APPLICATION_JSON));
 
@@ -76,4 +79,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         converters.add(fastJsonHttpMessageConverter4());
         super.configureMessageConverters(converters);
     }
+
+
 }

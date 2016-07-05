@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
  * Created by wangyong on 2016/6/30.
  */
 @Configuration
-@ComponentScan(basePackages = {"com.dao", "com.service"},
+@ComponentScan(basePackages = {"com.dao", "com.service", "com.configuration"},
         useDefaultFilters = false,
-        includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Service.class, Repository.class})})
+        includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Service.class, Repository.class, Configuration.class})})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class AppConfig {
 

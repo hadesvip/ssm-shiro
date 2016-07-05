@@ -1,16 +1,31 @@
 package com.bean;
 
-import java.io.Serializable;
-
 /**
  * 用户信息
  * Created by wangyong on 2016/7/1.
  */
-public class User implements Serializable {
 
+public class User {
+
+    //用户编号
+    private int userId;
+
+    //用户名
     private String userName;
 
-    private String password;
+    //用户密码
+    private String userPassword;
+
+    //是否锁住
+    private int locked;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getUserName() {
         return userName;
@@ -20,19 +35,19 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public int getLocked() {
+        return locked;
+    }
+
+    public void setLocked(int locked) {
+        this.locked = locked;
     }
 }

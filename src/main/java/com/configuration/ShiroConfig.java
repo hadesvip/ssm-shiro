@@ -1,6 +1,7 @@
 package com.configuration;
 
 import com.component.ShiroRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -27,17 +28,24 @@ public class ShiroConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShiroConfig.class);
 
 
-    @Bean(name = "realm")
+    @Bean(name = "shiroRealm")
     public Realm realm() {
-        return new ShiroRealm();
+        ShiroRealm realm = new ShiroRealm();
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashAlgorithmName("MD5");
+        matcher.setHashIterations(1024);
+        realm.setCredentialsMatcher(matcher);
+
+        return realm;
     }
+
 
     /**
      * 支持shiro表达式
      *
      * @return
      */
-    @Bean
+    @Bean(name = "lifecycleBeanPostProcessor")
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         LOGGER.info("register LifecycleBeanPostProcessor....");
 
@@ -56,21 +64,21 @@ public class ShiroConfig {
 
 
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager defaultWebSecurityManager(Realm realm) {
+    public DefaultWebSecurityManager defaultWebSecurityManager(Realm shiroRealm) {
         LOGGER.info("register DefaultWebSecurityManager...");
 
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        defaultWebSecurityManager.setRealm(realm);
+        defaultWebSecurityManager.setRealm(shiroRealm);
 
         return defaultWebSecurityManager;
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager defaultWebSecurityManager) {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
         LOGGER.info("register AuthorizationAttributeSourceAdvisor...");
 
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(defaultWebSecurityManager);
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
 
         return authorizationAttributeSourceAdvisor;
     }
@@ -87,9 +95,12 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
         //设置资源:登录，登出不需要做验证
-        filterChainDefinitionMap.put("/login.html", "anon");
+        filterChainDefinitionMap.put("/static/login.html", "anon");
+        filterChainDefinitionMap.put("/druid/*", "anon");
         filterChainDefinitionMap.put("/logout", "anon");
+        filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/index", "authc");
+
 
         //从数据库加载
 
@@ -98,13 +109,13 @@ public class ShiroConfig {
     }
 
 
-    @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager defaultWebSecurityManager) {
+    @Bean(name = "shiroFilter")
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
         LOGGER.info("load shiroFilterFactoryBean...");
 
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
-        shiroFilterFactoryBean.setLoginUrl("/login.html");
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        shiroFilterFactoryBean.setLoginUrl("/static/login.html");
         shiroFilterFactoryBean.setSuccessUrl("/index");
         shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
 
