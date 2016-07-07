@@ -1,13 +1,16 @@
 package com.configuration;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.mapper.ClassPathMapperScanner;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -15,9 +18,12 @@ import java.util.Properties;
  */
 @Configuration
 @Import(DataSourceConfig.class)
+@MapperScan("com.dao")
 public class MybatisConfig {
-    @Bean
-    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) {
+
+    @Bean(name = "sqlSessionFactory")
+    // @DependsOn("dataSource")
+    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws IOException {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
 
@@ -28,22 +34,26 @@ public class MybatisConfig {
         sqlSessionFactory.setConfigurationProperties(props);
         sqlSessionFactory.setTypeAliasesPackage("com.bean");
 
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource[] classPathResources = resolver.getResources("classpath:mapper/*.xml");
+        sqlSessionFactory.setMapperLocations(classPathResources);
+
         return sqlSessionFactory;
     }
 
 
-    @Bean
+    @Bean(name = "transactionManager")
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
         transactionManager.setDataSource(dataSource);
         return transactionManager;
     }
 
-    @Bean
+  /*  @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setBasePackage("com.dao");
         return mapperScannerConfigurer;
-    }
+    }*/
 
 }

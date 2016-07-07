@@ -15,7 +15,6 @@ import java.util.EnumSet;
  * springmvc Dispatcher初始化类
  * Created by wangyong on 2016/7/3.
  */
-@Order(1)
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebInitializer.class);
@@ -88,6 +87,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     public void onStartup(ServletContext servletContext) throws ServletException {
         LOGGER.info("onstart DruidStatView...");
         ServletRegistration.Dynamic druidStatView = servletContext.addServlet("DruidStatView", new StatViewServlet());
-        druidStatView.addMapping("/druid/*");
+        druidStatView.addMapping("/druid/**");
+        super.onStartup(servletContext);
     }
 }

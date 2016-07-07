@@ -1,10 +1,14 @@
 package com.bean;
 
+import org.apache.ibatis.type.Alias;
+
+import java.util.Set;
+
 /**
  * 用户信息
  * Created by wangyong on 2016/7/1.
  */
-
+@Alias(value = "user")
 public class User {
 
     //用户编号
@@ -18,6 +22,9 @@ public class User {
 
     //是否锁住
     private int locked;
+
+    //角色列表
+    private Set<Role> roleSet;
 
     public int getUserId() {
         return userId;
@@ -49,5 +56,13 @@ public class User {
 
     public void setLocked(int locked) {
         this.locked = locked;
+    }
+
+    public Set<Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
     }
 }

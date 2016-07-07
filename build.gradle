@@ -24,6 +24,19 @@ targetCompatibility = 1.8
 [compileJava, javadoc, compileTestJava]*.options*.encoding = 'UTF-8'
 webAppDirName = 'src/main/webapp'
 
+//sourceSets {
+//    main {
+//        java {
+//            srcDir 'src/main/java'
+//        }
+//
+//        resources {
+//            srcDirs = ['src/main/resources', 'src/main/java']
+//            include(['**/*.xml', '**/*.properties'])
+//        }
+//    }
+//}
+
 
 repositories {
 

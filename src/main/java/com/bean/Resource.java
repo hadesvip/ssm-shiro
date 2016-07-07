@@ -1,8 +1,11 @@
 package com.bean;
 
+import org.apache.ibatis.type.Alias;
+
 /**
  * Created by wangyong on 2016/7/5.
  */
+@Alias("resource")
 public class Resource {
 
     //资源编号

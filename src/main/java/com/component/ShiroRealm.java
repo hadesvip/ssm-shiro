@@ -1,18 +1,24 @@
 package com.component;
 
 import com.bean.User;
+import com.dao.UserMapper;
+import com.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 认证，授权
  * Created by wangyong on 2016/7/4.
  */
 public class ShiroRealm extends AuthorizingRealm {
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 授权
@@ -42,6 +48,9 @@ public class ShiroRealm extends AuthorizingRealm {
         User user = new User();
         user.setUserName(username);
         user.setUserPassword(password);
+
+        User dbUser = userService.getUser(username);
+        System.out.println(dbUser.getUserName());
 
         //form db password
         String credentials = "038bdaf98f2037b31f1e75b5b4c9b26e";
