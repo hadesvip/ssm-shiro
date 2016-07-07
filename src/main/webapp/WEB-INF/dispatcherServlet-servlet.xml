@@ -3,8 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--WebApplicationInitializer 依赖这个文件-->
-
-    <bean id=""></bean>
+    <!--WebApplicationInitializer 依赖这个文件,
+    目前采用AbstractAnnotationConfigDispatcherServletInitializer方式，这个配置文件无用-->
 
 </beans>
