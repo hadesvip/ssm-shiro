@@ -1,12 +1,17 @@
 package com.configuration;
 
+import com.cache.RedisCacheManager;
+import com.cache.RedisSessionDao;
 import com.component.ShiroRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
@@ -26,7 +31,6 @@ import java.util.Map;
 public class ShiroConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ShiroConfig.class);
-
 
     @Bean(name = "shiroRealm")
     public Realm realm() {
@@ -62,13 +66,50 @@ public class ShiroConfig {
         return defaultAdvisorAutoProxyCreator;
     }
 
+    @Bean
+    public RedisSessionDao sessionDao() {
+        RedisSessionDao sessionDao = new RedisSessionDao();
+        return sessionDao;
+    }
+
+    @Bean
+    public RedisCacheManager cacheManager() {
+        RedisCacheManager cacheManager = new RedisCacheManager();
+        return cacheManager;
+    }
+
+    @Bean
+    public SimpleCookie simpleCookie() {
+        SimpleCookie cookie = new SimpleCookie();
+        cookie.setDomain("/");
+        cookie.setHttpOnly(true);
+        cookie.setName("SHIROJESSION");
+
+        return cookie;
+    }
+
+
+    @Bean(name = "sessionManager")
+    public DefaultWebSessionManager defaultWebSessionManager(RedisSessionDao sessionDao, RedisCacheManager cacheManager, SimpleCookie simpleCookie) {
+        LOGGER.info("register sessionManager...");
+
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setSessionDAO(sessionDao);
+       // sessionManager.setCacheManager(cacheManager);
+        sessionManager.setSessionIdCookie(simpleCookie);
+
+        return sessionManager;
+    }
+
 
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager defaultWebSecurityManager(Realm shiroRealm) {
+    public DefaultWebSecurityManager defaultWebSecurityManager(Realm shiroRealm, SessionManager sessionManager, RedisCacheManager cacheManager) {
         LOGGER.info("register DefaultWebSecurityManager...");
 
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(shiroRealm);
+        defaultWebSecurityManager.setSessionManager(sessionManager);
+        defaultWebSecurityManager.setCacheManager(cacheManager);
 
         return defaultWebSecurityManager;
     }
@@ -100,6 +141,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/logout", "anon");
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/index", "authc");
+        filterChainDefinitionMap.put("/**", "authc");
 
 
         //从数据库加载

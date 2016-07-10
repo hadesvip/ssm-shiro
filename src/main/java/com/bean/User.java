@@ -2,6 +2,7 @@ package com.bean;
 
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -9,7 +10,9 @@ import java.util.Set;
  * Created by wangyong on 2016/7/1.
  */
 @Alias(value = "user")
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = -5543971460692298312L;
 
     //用户编号
     private int userId;

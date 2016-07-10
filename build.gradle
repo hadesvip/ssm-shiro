@@ -118,6 +118,13 @@ dependencies {
     //spring thymeleaf模板
     compile("org.thymeleaf:thymeleaf:3.0.0.RELEASE")
 
+    //jedis
+    compile("redis.clients:jedis:2.8.1")
+
+    //spring-data-redis
+    compile("org.springframework.data:spring-data-redis:1.7.2.RELEASE")
+
+
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
