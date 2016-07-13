@@ -3,7 +3,6 @@ package com.configuration;
 import com.alibaba.druid.support.http.StatViewServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -36,7 +35,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
      */
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{MvcConfig.class};
+        return new Class<?>[]{MVConfig.class};
     }
 
     /**

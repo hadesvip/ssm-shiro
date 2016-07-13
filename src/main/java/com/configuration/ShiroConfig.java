@@ -80,10 +80,9 @@ public class ShiroConfig {
 
     @Bean
     public SimpleCookie simpleCookie() {
-        SimpleCookie cookie = new SimpleCookie();
+        SimpleCookie cookie = new SimpleCookie("SHIROJESSION");
         cookie.setDomain("/");
         cookie.setHttpOnly(true);
-        cookie.setName("SHIROJESSION");
 
         return cookie;
     }
@@ -95,7 +94,7 @@ public class ShiroConfig {
 
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionDAO(sessionDao);
-       // sessionManager.setCacheManager(cacheManager);
+        // sessionManager.setCacheManager(cacheManager);
         sessionManager.setSessionIdCookie(simpleCookie);
 
         return sessionManager;
@@ -137,6 +136,8 @@ public class ShiroConfig {
 
         //设置资源:登录，登出不需要做验证
         filterChainDefinitionMap.put("/static/login.html", "anon");
+        filterChainDefinitionMap.put("/script/**", "anon");
+        filterChainDefinitionMap.put("/bower_components/**", "anon");
         filterChainDefinitionMap.put("/druid/*", "anon");
         filterChainDefinitionMap.put("/logout", "anon");
         filterChainDefinitionMap.put("/login", "anon");
@@ -144,7 +145,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/**", "authc");
 
 
-        //从数据库加载
+        //TODO 从数据库加载
 
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

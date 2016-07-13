@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>用户登录</title>
 </head>
-<body>
+<body ng-controller="loginCtrl">
 
 <h3>用户登录</h3>
 <br>
-<form action="/login" method="post">
-    用户名:<input name="username" type="text"/>
+<form ng-submit="loginAction()" method="post">
+    用户名:<input name="username" ng-model="username" type="text"/>
     <br>
-    密&nbsp;码:<input name="password" type="password"/>
+    密&nbsp;码:<input name="password" ng-model="password" type="password"/>
     <br>
     <input type="submit" value="登录">
 </form>
@@ -19,6 +19,12 @@
 <a href="/logout">登出</a>
 
 
-<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="/script/login.js"></script>
+<script type="text/javascript">
+
+    angular.bootstrap(document, ['loginModule']);
+
+</script>
 </body>
 </html>
