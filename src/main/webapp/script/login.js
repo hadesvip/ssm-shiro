@@ -17,7 +17,7 @@ loginModule.controller('loginCtrl', ['$scope', '$http', function ($scope, $http)
         $http({
             method: 'POST',
             url: '/login',
-            data: data
+            params: data
         }).then(function successCallback(response) {
             var status = response.status;
             var data = response.data;
