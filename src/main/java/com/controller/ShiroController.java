@@ -18,13 +18,29 @@ public class ShiroController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public HttpResult login(String username, String password) {
-        HttpResult result = new HttpResult();
+        HttpResult result = HttpResult.fail();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         final Subject subject = SecurityUtils.getSubject();
         boolean authenticated = subject.isAuthenticated();
         System.out.println("islogin-->" + authenticated);
         subject.login(token);
         result.setData("login success...");
+        return result;
+    }
+
+
+    /**
+     * 用户注册
+     *
+     * @return
+     */
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public HttpResult register(String username, String password, String repassword) {
+        HttpResult result = HttpResult.fail();
+
+        //参数校验
+
+
         return result;
     }
 
@@ -36,6 +52,5 @@ public class ShiroController {
         result.setData("logout success...");
         return result;
     }
-
 
 }

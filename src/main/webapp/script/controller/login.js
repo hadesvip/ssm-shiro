@@ -27,6 +27,8 @@ loginModule.controller('loginCtrl', ['$scope', '$http', function ($scope, $http)
 
         });
 
+        return false;
+
     }
 
 }]);

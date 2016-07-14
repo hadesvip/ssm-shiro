@@ -57,6 +57,11 @@ public class MVConfig extends WebMvcConfigurerAdapter {
 
         registry.addResourceHandler("/script/**")
                 .addResourceLocations("/script/");
+
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("/images/");
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("/css/");
         // .setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
 
         registry.addResourceHandler("/static/**")

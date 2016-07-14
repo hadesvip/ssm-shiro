@@ -136,7 +136,10 @@ public class ShiroConfig {
 
         //设置资源:登录，登出不需要做验证
         filterChainDefinitionMap.put("/static/login.html", "anon");
+        filterChainDefinitionMap.put("/static/register.html", "anon");
         filterChainDefinitionMap.put("/script/**", "anon");
+        filterChainDefinitionMap.put("/images/**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/bower_components/**", "anon");
         filterChainDefinitionMap.put("/druid/*", "anon");
         filterChainDefinitionMap.put("/logout", "anon");

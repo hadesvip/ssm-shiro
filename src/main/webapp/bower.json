@@ -6,7 +6,9 @@
     "bootstrap": "^3.2.0",
     "angular-animate": "^1.4.0",
     "smalot-bootstrap-datetimepicker": "bootstrap-datetimepicker-master#^2.3.11",
-    "bootstrap-datetimepicker": "^0.0.11"
+    "bootstrap-datetimepicker": "^0.0.11",
+    "font-awesome": "Font-Awesome#^4.6.3",
+    "metisMenu": "^2.5.2"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
