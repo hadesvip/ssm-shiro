@@ -4,7 +4,12 @@
     
 ## 文档参考    
 1. spring 官方文档
-    - http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle    
+    - http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle  
+      
+## 功能点
+1. 注册
+2. 登录     
+      
 ### 注意点
 1. 使用springTest进行测试
     - 如果出现java.lang.NoSuchMethodError: org.slf4j.spi.LocationAwareLogger.log错误
@@ -43,3 +48,4 @@
             return new PropertySourcesPlaceholderConfigurer();
         }
     - @Value跟PropertyPlaceholderConfigurer,@PropertySource搭配使用
+    
