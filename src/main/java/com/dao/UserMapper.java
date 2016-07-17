@@ -14,4 +14,7 @@ public interface UserMapper {
 
     //    @Select("select user_id,user_name,user_password,locked from user")
     User getUser(Map<String, Object> map);
+
+    int insertUser(User user);
+
 }

@@ -137,6 +137,7 @@ public class ShiroConfig {
         //设置资源:登录，登出不需要做验证
         filterChainDefinitionMap.put("/static/login.html", "anon");
         filterChainDefinitionMap.put("/static/register.html", "anon");
+        filterChainDefinitionMap.put("/userWebGetCode", "anon");
         filterChainDefinitionMap.put("/script/**", "anon");
         filterChainDefinitionMap.put("/images/**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
@@ -144,7 +145,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/druid/*", "anon");
         filterChainDefinitionMap.put("/logout", "anon");
         filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/register", "anon");
         filterChainDefinitionMap.put("/index", "authc");
+        filterChainDefinitionMap.put("/static/index.html", "anon");
         filterChainDefinitionMap.put("/**", "authc");
 
 

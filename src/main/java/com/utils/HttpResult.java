@@ -8,7 +8,7 @@ public class HttpResult<T> {
 
 
     //状态码
-    private int resultCode;
+    private HttpCode resultCode;
 
     //响应消息
     private String resultMsg;
@@ -18,18 +18,34 @@ public class HttpResult<T> {
 
     public static <T> HttpResult<T> success() {
         HttpResult<T> result = new HttpResult<>();
-        result.resultCode = 200;
+        result.resultCode = HttpCode.OK;
         result.resultMsg = "操作成功...";
         return result;
     }
 
     public static <T> HttpResult<T> fail() {
         HttpResult<T> result = new HttpResult<>();
-        result.resultCode = 202;
+        result.resultCode = HttpCode.FAIL;
         result.resultMsg = "操作过程中发生错误...";
         return result;
     }
 
+
+    public HttpCode getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(HttpCode resultCode) {
+        this.resultCode = resultCode;
+    }
+
+    public String getResultMsg() {
+        return resultMsg;
+    }
+
+    public void setResultMsg(String resultMsg) {
+        this.resultMsg = resultMsg;
+    }
 
     public T getData() {
         return data;

@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <title>首页</title>
 </head>
-<body>
-index...
+<body ng-controller="indexController">
+
+<h3>index...</h3>
+
+<div ng-repeat="d in data">
+    <input type="checkbox" value="{{d.id}}" ng-click="updateSelect($event,d.id)"/>&nbsp;{{d.name}}
+</div>
+
+
+<button ng-click="submitAction()">提交</button>
+
 </body>
+<script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="/script/controller/index.js"></script>
+
+<script type="text/javascript">
+    angular.bootstrap(document, ['indexModule']);
+
+</script>
 </html>

@@ -31,4 +31,9 @@
     WHERE u.user_name = #{username}
     </select>
 
+    <insert id="insertUser" parameterType="user">
+      insert into user values(null,#{userName},#{userPassword},#{locked});
+    </insert>
+
+
 </mapper>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login</title>
+    <title>注册</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -35,36 +35,56 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">注册</h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" ng-controller="registerController as register">
                     <form role="form">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="手机号" name="email">
+                                <input class="form-control" ng-model="username" placeholder="用户名" name="username">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="密码" name="password" type="password" value="">
+                                <input class="form-control" ng-model="password" placeholder="密码" name="password"
+                                       type="password"/>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="确认密码" name="password" type="password" value="">
+                                <input class="form-control" ng-model="repassword" placeholder="确认密码" name="repassword"
+                                       type="password"/>
                             </div>
 
                             <!-- Change this to a button or input when using this as a form -->
-                            <a href="login.html" class="btn btn-lg btn-success btn-block">注册</a>
+                            <a ng-click="registerAction()" class="btn btn-lg btn-success btn-block">注册</a>
 
                         </fieldset>
                     </form>
+
+                    <div class="modal fade" id="tipModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">提示</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p style="margin: 0 0 0 0; text-align: center;">{{text}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
-<script type="text/javascript" src="/script/controller/login.js"></script>
+<script type="text/javascript" src="/script/module/register-module.js"></script>
+<script type="text/javascript" src="/script/controller/register-controller.js"></script>
 <script type="text/javascript">
-
-    angular.bootstrap(document, ['loginModule']);
-
+    angular.bootstrap(document, ['registerModule']);
 </script>
 
 </body>

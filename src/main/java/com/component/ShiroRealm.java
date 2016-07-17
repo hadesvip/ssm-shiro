@@ -9,6 +9,8 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -16,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by wangyong on 2016/7/4.
  */
 public class ShiroRealm extends AuthorizingRealm {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(ShiroRealm.class);
 
     @Autowired
     private UserService userService;
@@ -36,7 +40,7 @@ public class ShiroRealm extends AuthorizingRealm {
     /**
      * 认证
      *
-     * @param token
+     * @param token 登录用户
      * @return
      * @throws AuthenticationException
      */

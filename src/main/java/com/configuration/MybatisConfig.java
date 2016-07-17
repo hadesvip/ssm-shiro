@@ -2,12 +2,13 @@ package com.configuration;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.mapper.ClassPathMapperScanner;
-import org.mybatis.spring.mapper.MapperScannerConfigurer;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.Properties;
 @Configuration
 @Import(DataSourceConfig.class)
 @MapperScan("com.dao")
+@EnableTransactionManagement
 public class MybatisConfig {
 
     @Bean(name = "sqlSessionFactory")
@@ -48,6 +50,19 @@ public class MybatisConfig {
         transactionManager.setDataSource(dataSource);
         return transactionManager;
     }
+
+  /*  @Bean
+    public TransactionProxyFactoryBean transactionProxyFactoryBean(DataSourceTransactionManager transactionManager) {
+        TransactionProxyFactoryBean transactionProxyFactoryBean = new TransactionProxyFactoryBean();
+        transactionProxyFactoryBean.setTransactionManager(transactionManager);
+        Properties props = new Properties();
+        props.setProperty("insert*", "PROPAGATION_REQUIRED");
+        props.setProperty("get*", "PROPAGATION_REQUIRED,readOnly");
+        transactionProxyFactoryBean.setTransactionAttributes(props);
+
+        return transactionProxyFactoryBean;
+    }*/
+
 
   /*  @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {

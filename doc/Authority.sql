@@ -1,38 +1,42 @@
-drop table user;
-drop table role;
-drop table resource;
-drop table user_role;
-drop table role_resource;
+DROP TABLE user;
+DROP TABLE role;
+DROP TABLE resource;
+DROP TABLE user_role;
+DROP TABLE role_resource;
 # user,role,resource,user_role,role_resource
-create table user(
-	user_id int auto_increment primary key,
-    user_name varchar(20),
-    user_password varchar(50),
-    locked int
-)engine = innodb default charset = utf8;
-create table role(
-	role_id int auto_increment primary key,
-    role_name varchar(10),
-    available int
-)engine = innodb default charset=utf8;
+CREATE TABLE user (
+  user_id       INT AUTO_INCREMENT PRIMARY KEY,
+  user_name     VARCHAR(20),
+  user_password VARCHAR(50),
+  locked        INT,
+  UNIQUE user_name_uq(user_name)
+)ENGINE = innodb DEFAULT CHARSET = utf8;
 
-create table resource(
-	resource_id int auto_increment primary key,
-    resource_type int,
-    resource_name varchar(10),
-    url  varchar(30) ,
-    parent int ,
-    permission varchar(30)
-) engine = innodb default charset = utf8;
+CREATE TABLE role (
+  role_id   INT AUTO_INCREMENT PRIMARY KEY,
+  role_name VARCHAR(10),
+  available INT,
+  UNIQUE role_name_uq (role_name)
+)ENGINE = innodb DEFAULT CHARSET = utf8;
 
-create table user_role(
- user_id int,
- role_id int,
- primary key(user_id,role_id)
-)engine=innodb default charset =utf8;
+CREATE TABLE resource (
+  resource_id   INT AUTO_INCREMENT PRIMARY KEY,
+  resource_type INT,
+  resource_name VARCHAR(10),
+  url           VARCHAR(30),
+  parent        INT,
+  permission    VARCHAR(30),
+  UNIQUE resource_name_uq(resource_name)
+)ENGINE = innodb DEFAULT CHARSET = utf8;
 
-create table role_resource(
- role_id int ,
- resource_id int,
- primary key(role_id,resource_id)
-)engine=innodb default charset =utf8;
+CREATE TABLE user_role (
+  user_id INT,
+  role_id INT,
+  PRIMARY KEY (user_id, role_id)
+)ENGINE = innodb DEFAULT CHARSET = utf8;
+
+CREATE TABLE role_resource (
+  role_id     INT,
+  resource_id INT,
+  PRIMARY KEY (role_id, resource_id)
+)ENGINE = innodb DEFAULT CHARSET = utf8;

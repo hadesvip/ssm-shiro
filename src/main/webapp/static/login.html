@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login</title>
+    <title></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -22,13 +22,11 @@
 
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css"/>
-
-
 </head>
 
 <body>
 
-<div class="container" ng-controller="loginCtrl">
+<div class="container" ng-controller="loginController">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
@@ -39,11 +37,11 @@
                     <form role="form">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" ng-model="username" placeholder="手机号" name="email">
+                                <input class="form-control" ng-model="username" placeholder="账号" name="username">
                             </div>
                             <div class="form-group">
                                 <input class="form-control" ng-model="password" placeholder="密码" name="password"
-                                       type="password" value="">
+                                       type="password">
                             </div>
                             <div class="checkbox">
                                 <label>
@@ -52,9 +50,9 @@
                             </div>
 
                             <!-- Change this to a button or input when using this as a form -->
-                            <a ng-h ng-click="loginAction()" class="btn btn-lg btn-success btn-block">登录</a>
+                            <a ng-click="loginAction()" class="btn btn-lg btn-success btn-block">登录</a>
                             <div style="text-align:right;">
-                                <a href="register.html" class="btn ">没有账号密码？点击注册</a>
+                                <a href="register.html" class="btn">没有账号密码？点击注册</a>
                             </div>
 
                         </fieldset>
@@ -66,11 +64,10 @@
 </div>
 
 <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
-<script type="text/javascript" src="/script/controller/login.js"></script>
+<script type="text/javascript" src="/script/module/login-module.js"></script>
+<script type="text/javascript" src="/script/controller/login-controller.js"></script>
 <script type="text/javascript">
-
     angular.bootstrap(document, ['loginModule']);
-
 </script>
 
 </body>
