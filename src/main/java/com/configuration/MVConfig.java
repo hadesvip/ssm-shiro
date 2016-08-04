@@ -17,7 +17,9 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
+import org.springframework.web.servlet.view.velocity.VelocityToolboxView;
+import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,16 +34,56 @@ public class MVConfig extends WebMvcConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(MVConfig.class);
 
+
     /**
      * 视图解析器
+     * velocity
+     * 过期是由于velocity六年没有更新过了,spring官方推荐使用FreeMarker或者Thymeleaf
+     * 后期考虑spring官方的Thymeleaf
      */
     @Bean
     public ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+    /*    InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setContentType("text/html;charset=utf-8");
         viewResolver.setPrefix("/static/");
         viewResolver.setSuffix(".html");
-        return viewResolver;
+        return viewResolver;*/
+        VelocityViewResolver velocityViewResolver = new VelocityViewResolver();
+        velocityViewResolver.setCache(true);
+        velocityViewResolver.setPrefix("");
+        velocityViewResolver.setSuffix(".html");
+        velocityViewResolver.setToolboxConfigLocation("classpath:velocityToolBox.xml");
+        velocityViewResolver.setViewClass(VelocityToolboxView.class);
+        return velocityViewResolver;
+    }
+
+    /**
+     * 视图解析器
+     * Thymeleaf
+     *
+     * @param servletContext
+     * @return
+     */
+  /*  @Bean(name = "templateResolver")
+    public ServletContextTemplateResolver servletContextTemplateResolver(ServletContext servletContext) {
+        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+        templateResolver.setPrefix("/WEB-INF/template/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("HTML5");
+        return templateResolver;
+    }*/
+
+
+    /**
+     * 过期是由于velocity六年没有更新过了,spring官方推荐使用FreeMarker或者Thymeleaf
+     *
+     * @return
+     */
+    @Bean(name = "velocityConfig")
+    public VelocityConfigurer velocityConfigurer() {
+        VelocityConfigurer configurer = new VelocityConfigurer();
+        configurer.setResourceLoaderPath("/WEB-INF/template");
+        return configurer;
     }
 
     /**

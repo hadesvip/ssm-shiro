@@ -1,6 +1,7 @@
 ## ssm-shiro
 1. 总体框架
     - springmvc+mybatis+angualrjs+bootstrap+logback+mysql+shiro
+    - velocity1.7+MongoDB+Redis
     
 ## 文档参考    
 1. spring 官方文档
