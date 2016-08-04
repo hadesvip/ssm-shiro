@@ -49,4 +49,7 @@
             return new PropertySourcesPlaceholderConfigurer();
         }
     - @Value跟PropertyPlaceholderConfigurer,@PropertySource搭配使用
+ 
     
+##关于前后端分离开发
+    1. 完全的前后端分离开发太费劲儿，个人觉得应该采用渲染引擎+前后端分离
