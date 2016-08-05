@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by wangyong on 2016/7/3.
@@ -52,7 +53,10 @@ public class MVConfig extends WebMvcConfigurerAdapter {
         velocityViewResolver.setCache(true);
         velocityViewResolver.setPrefix("");
         velocityViewResolver.setSuffix(".html");
-        velocityViewResolver.setToolboxConfigLocation("classpath:velocityToolBox.xml");
+        velocityViewResolver.setContentType("text/html;charset=utf-8");
+
+        //关于Toolbox路径问题:如何路径开始头没有/会自动加上/，所以你如果写classpath:之类的识别不了
+        velocityViewResolver.setToolboxConfigLocation("/WEB-INF/velocityToolBox.xml");
         velocityViewResolver.setViewClass(VelocityToolboxView.class);
         return velocityViewResolver;
     }
@@ -82,7 +86,13 @@ public class MVConfig extends WebMvcConfigurerAdapter {
     @Bean(name = "velocityConfig")
     public VelocityConfigurer velocityConfigurer() {
         VelocityConfigurer configurer = new VelocityConfigurer();
-        configurer.setResourceLoaderPath("/WEB-INF/template");
+        configurer.setResourceLoaderPath("/WEB-INF/template/");
+        Properties properties = new Properties();
+
+        //解决乱码问题
+        properties.setProperty("input.encoding", "utf-8");
+        properties.setProperty("output.encoding", "utf-8");
+        configurer.setVelocityProperties(properties);
         return configurer;
     }
 

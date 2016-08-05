@@ -132,7 +132,7 @@ dependencies {
     compile("org.apache.velocity:velocity:${velocityVersion}")
 
     //thymeleaf
-    compile("org.thymeleaf:thymeleaf:${thymeleafVersion}")
+    //compile("org.thymeleaf:thymeleaf:${thymeleafVersion}")
 
 
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
