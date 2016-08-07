@@ -3,6 +3,7 @@ package com.cache;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.Collection;
  * Created by wangyong on 2016/7/10.
  */
 @Component
-public class RedisSessionDao extends AbstractSessionDAO {
+public class RedisSessionDao extends EnterpriseCacheSessionDAO {
 
 
     public RedisSessionDao() {
@@ -28,11 +29,12 @@ public class RedisSessionDao extends AbstractSessionDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisSessionDao.class);
 
-    private String keyPrefix = "shiro_redis_session:";
+    private String keyPrefix = "shiro-redis-session:";
 
     private long sessionExpireTime = 30 * 60;
 
     private void saveSession(Session session) {
+        LOGGER.info("saveSession for " + session);
         if (session == null || session.getId() == null) {
             return;
         }

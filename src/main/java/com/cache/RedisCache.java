@@ -5,6 +5,8 @@ import org.apache.shiro.cache.CacheException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.SerializationUtils;
 
@@ -20,24 +22,38 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     private static final Logger Logger = LoggerFactory.getLogger(RedisCache.class);
 
-    private String keyPrefix = "shiro_redis_session:";
+    /**
+     * 缓存key前缀
+     */
+    private String keyProfix;
 
-
-    public RedisCache() {
-        System.out.println("redisCache....");
-    }
+    /**
+     * 是否使用cache key前缀
+     */
+    private boolean useKeyProfix;
 
     @Autowired
     private JRedisClient jRedisClient;
+
+    public RedisCache() {
+    }
+
+    public RedisCache(String keyProfix, boolean useKeyProfix) {
+        this.keyProfix = keyProfix;
+        this.useKeyProfix = useKeyProfix;
+    }
 
     @Override
     public V get(K key) throws CacheException {
         if (key == null) {
             return null;
         }
-
         if (key instanceof String) {
             String k = (String) key;
+
+            if (useKeyProfix) {
+                k = keyProfix + k;
+            }
             return (V) SerializationUtils.deserialize(jRedisClient.get(k.getBytes()));
         }
 
@@ -53,6 +69,9 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
         if (key instanceof String) {
             String k = (String) key;
+            if (useKeyProfix) {
+                k = keyProfix + k;
+            }
             byte[] v = SerializationUtils.serialize(value);
             jRedisClient.set(k.getBytes(), v);
 
@@ -70,6 +89,9 @@ public class RedisCache<K, V> implements Cache<K, V> {
         }
         if (key instanceof String) {
             String k = (String) key;
+            if (useKeyProfix) {
+                k = keyProfix + k;
+            }
             jRedisClient.delete(k.getBytes());
         }
         return null;
